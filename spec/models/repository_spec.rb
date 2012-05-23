@@ -19,9 +19,24 @@ describe Repository do
       repository.should_not be_valid
     end
 
-    it "the path should be a uri" do
+    it "should be invalid if the path isn't a uri" do
       repository.path = "not a uri"
       repository.should_not be_valid
+    end
+
+    it "should be invalid if the path isn't a git repo" do
+      repository.path = "git://github.com/mojombo/dirt.git"
+      repository.should_not be_valid
+    end
+  end
+
+  describe "is_git_repo? method" do
+    it "should return true when passed a valid git repo" do
+      Repository.is_git_repo?("git://github.com/mojombo/grit.git").should be_true
+    end
+
+    it "should return false when passed an invalid git repo" do
+      Repository.is_git_repo?("http://google.com").should be_false
     end
   end
 

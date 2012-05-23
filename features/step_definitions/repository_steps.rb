@@ -4,7 +4,7 @@ end
 
 When /^I enter valid repository details$/ do
   fill_in('Name', :with => "test")
-  fill_in('Path', :with => "http://test.com")
+  fill_in('Path', :with => "git://github.com/mojombo/grit.git")
 end
 
 When /^I create the repository$/ do

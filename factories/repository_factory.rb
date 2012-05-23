@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :repository do
     name "Test Repository"
-    path "https://thing.com"
+    path "git://github.com/mojombo/grit.git"
   end
 end
