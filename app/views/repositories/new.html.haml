@@ -1,0 +1,12 @@
+%h1 New Repository
+
+= error_messages_for @repository
+
+= form_for @repository do |f|
+  = f.label :name
+  = f.text_field :name
+
+  = f.label :path
+  = f.text_field :path
+
+  = f.submit

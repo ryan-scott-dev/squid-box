@@ -1,0 +1,5 @@
+#error_messages
+  %p Please fix the following errors:
+  %ul
+    - errors.full_messages.each do |message|
+      %li= message
