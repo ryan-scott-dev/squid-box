@@ -5,6 +5,8 @@
 # files.
 
 require 'cucumber/rails'
+require 'cucumber/rspec/doubles'
+require 'factory_girl/step_definitions'
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
 # order to ease the transition to Capybara we set the default here. If you'd
@@ -57,3 +59,7 @@ end
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
+Before do
+  Repository.stub(:is_git_repo?).and_return false
+  Repository.stub(:is_git_repo?).with("git://github.com/mojombo/grit.git").and_return true
+end

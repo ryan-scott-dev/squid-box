@@ -22,3 +22,19 @@ end
 Then /^I should see an error message$/ do
   find("#error_messages").has_content?("errors")
 end
+
+When /^I should see a cloning repository message$/ do
+  page.should have_content("Cloning Repository")
+end
+
+When /^I am on the show repository page for "([^"]*)"$/ do |name|
+  repository = Repository.find_by_name name
+
+  visit repository_path(repository)
+end
+
+Then /^I should see the repositories commits$/ do
+  page.should have_content("Commits")
+
+  page.all(".commit").should_not be_blank
+end

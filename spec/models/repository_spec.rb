@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe Repository do
+
+  before(:each) do
+    Repository.stub(:is_git_repo?).and_return false
+    Repository.stub(:is_git_repo?).with("git://github.com/mojombo/grit.git").and_return true
+  end
+
   let(:repository) { FactoryGirl.create(:repository) }
 
   describe "Validation" do
@@ -20,7 +26,7 @@ describe Repository do
     end
 
     it "should be invalid if the path isn't a uri" do
-      repository.path = "not a uri"
+      repository.path = "invalid"
       repository.should_not be_valid
     end
 

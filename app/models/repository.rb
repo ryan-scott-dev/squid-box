@@ -12,12 +12,23 @@ class Repository < ActiveRecord::Base
     errors.add(:path, "not a valid git repo") unless Repository.is_git_repo?(self.path)
   end
 
+  def commits
+    repo.commits
+  end
+
   private
 
+  def repo
+    Grit::Repo.new(path)
+  end
+
+  def remote_repo
+    Grit::Git.new(path)
+  end
+
   def self.is_git_repo?(path)
-    repo = Grit::Git.new(path)
-    remotes = repo.run('', 'ls-remote "' + path + '"', '', {}, {})
-    remotes != ""
+    remotes = remote_repo.run('', 'ls-remote "' + path + '"', '', {}, {})
+    remotes.present?
   end
 
   def self.uri?(string)

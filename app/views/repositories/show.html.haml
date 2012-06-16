@@ -1,2 +1,10 @@
-%h1 Repositories#show
-%p Find me in app/views/repositories/show.html.haml
+%h1
+  = @repository.name
+
+.commits
+  Commits
+
+  - @repository.commits.each do |commit|
+    .commit
+      #{commit.date}
+      #{commit.author_string}
