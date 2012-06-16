@@ -4,7 +4,35 @@
 .commits
   Commits
 
-  - @repository.commits.each do |commit|
-    .commit
-      #{commit.date}
-      #{commit.author_string}
+  %table
+    %thead
+      %tr
+        %th
+          Date
+        %th
+          Author
+        %th
+          Message
+        %th
+          Changes
+        %th
+          Commit ID
+    - @repository.commits.each do |commit|
+      %tr.commit
+        %td
+          #{commit.date}
+
+        %td
+          #{commit.author}
+
+        %td
+          #{commit.short_message}
+
+        %td
+          .added
+            + #{commit.stats.additions}
+          .deleted
+            = "- #{commit.stats.deletions}"
+
+        %td
+          #{commit.id_abbrev}

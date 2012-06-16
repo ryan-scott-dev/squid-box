@@ -7,7 +7,7 @@ describe Repository do
     Repository.stub(:is_git_repo?).with("git://github.com/mojombo/grit.git").and_return true
   end
 
-  let(:repository) { FactoryGirl.create(:repository) }
+  let(:repository) { FactoryGirl.build(:repository) }
 
   describe "Validation" do
 

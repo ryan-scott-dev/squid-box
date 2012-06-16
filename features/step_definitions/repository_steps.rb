@@ -35,6 +35,4 @@ end
 
 Then /^I should see the repositories commits$/ do
   page.should have_content("Commits")
-
-  page.all(".commit").should_not be_blank
 end
