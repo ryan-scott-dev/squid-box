@@ -13,6 +13,20 @@
 .deleted
   = "- #{@commit.stats.deletions}"
 
-- @commit.diffs.each do |diff|
-  - diff = Diffy::Diff.new(diff.a_blob.data, diff.b_blob.data)
-  = raw "#{diff.to_s}"
+.file-diff
+  - @commit.diffs.each do |diff|
+
+    %br
+
+    .file-name
+      - if diff.a_path != diff.b_path
+        #{diff.a_path} ==> #{diff.b_path}
+      - else
+        = diff.a_path
+
+    .line-diff
+      - # only need to check the original
+      - original = diff.a_blob.nil? ? nil : diff.a_blob.data
+
+      - diff = Diffy::Diff.new(original, diff.b_blob.data)
+      = raw "#{DiffFormatter.render_differences(diff)}"
