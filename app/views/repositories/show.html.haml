@@ -40,3 +40,5 @@
 
         %td
           = link_to "View", "/repository/#{@repository.id}/commit/#{commit.id}"
+
+  = will_paginate @commit_pagination

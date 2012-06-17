@@ -41,7 +41,11 @@ class Repository < ActiveRecord::Base
   end
 
   def commits(offset = 0, per_page = 10)
-    repo.commits('master', per_page, offset)
+    repo.commits('master', per_page, offset * per_page)
+  end
+
+  def total_commits
+    repo.commit_count
   end
 
   def find_commit(commit_id)
