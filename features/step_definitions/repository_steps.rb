@@ -36,3 +36,9 @@ end
 Then /^I should see the repositories commits$/ do
   page.should have_content("Commits")
 end
+
+Then /^I should see the description for "([^"]*)"$/ do |name|
+  repository = Repository.find_by_name name
+
+  find(".description").should have_content(repository.description)
+end

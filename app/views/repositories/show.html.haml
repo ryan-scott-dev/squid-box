@@ -1,6 +1,9 @@
 %h1
   = @repository.name
 
+.description
+  = @repository.description
+
 .commits
   Commits
 
@@ -20,7 +23,7 @@
     - @repository.commits.each do |commit|
       %tr.commit
         %td
-          #{commit.date}
+          #{I18n.l commit.date, :format => :short}
 
         %td
           #{commit.author}

@@ -20,6 +20,10 @@ class Repository < ActiveRecord::Base
     "./repos/#{id}"
   end
 
+  def description
+    repo.description
+  end
+
   def ensure_repository_exists
 
     if File.directory? generate_local_path

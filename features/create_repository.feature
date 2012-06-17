@@ -14,10 +14,3 @@ Feature: Create Repositories
     When I enter invalid repository details
     And I create the repository
     Then I should see an error message
-
-  Scenario: See the commits of a repository
-    Given the following repository exists:
-      | name |
-      | Test Repository |
-    And I am on the show repository page for "Test Repository"
-    Then I should see the repositories commits
