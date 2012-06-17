@@ -15,5 +15,6 @@ class RepositoriesController < ApplicationController
 
   def show
     @repository = Repository.find(params[:id])
+    @commits = @repository.commits
   end
 end

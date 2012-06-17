@@ -40,8 +40,8 @@ class Repository < ActiveRecord::Base
 
   end
 
-  def commits
-    repo.commits
+  def commits(offset = 0, per_page = 10)
+    repo.commits('master', per_page, offset)
   end
 
   def find_commit(commit_id)

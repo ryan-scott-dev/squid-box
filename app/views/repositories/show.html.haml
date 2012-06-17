@@ -18,7 +18,7 @@
           Changes
         %th
           Commit ID
-    - @repository.commits.each do |commit|
+    - @commits.each do |commit|
       %tr.commit
         %td
           #{I18n.l commit.date, :format => :short}
