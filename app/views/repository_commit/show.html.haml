@@ -1,0 +1,18 @@
+
+%h2
+  #{@commit.id_abbrev}
+
+#{I18n.l @commit.date, :format => :short}
+
+#{@commit.author}
+
+#{@commit.short_message}
+
+.added
+  + #{@commit.stats.additions}
+.deleted
+  = "- #{@commit.stats.deletions}"
+
+- @commit.diffs.each do |diff|
+  - diff = Diffy::Diff.new(diff.a_blob.data, diff.b_blob.data)
+  = raw "#{diff.to_s}"

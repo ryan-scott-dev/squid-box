@@ -11,6 +11,3 @@ Feature: Show Repository
 
   Scenario: See the commits of a repository
     Then I should see the repositories commits
-
-  Scenario: See the repository descriptions
-    Then I should see the description for "Test Repository"

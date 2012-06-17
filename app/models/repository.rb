@@ -44,6 +44,10 @@ class Repository < ActiveRecord::Base
     repo.commits
   end
 
+  def find_commit(commit_id)
+    repo.commit(commit_id)
+  end
+
   private
 
   def repo

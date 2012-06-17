@@ -1,11 +1,9 @@
 %h1
   = @repository.name
 
-.description
-  = @repository.description
-
 .commits
-  Commits
+  %h2
+    Commits
 
   %table
     %thead
@@ -39,3 +37,6 @@
 
         %td
           #{commit.id_abbrev}
+
+        %td
+          = link_to "View", "/repository/#{@repository.id}/commit/#{commit.id}"
