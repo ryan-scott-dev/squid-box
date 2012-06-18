@@ -15,6 +15,10 @@ class RepositoriesController < ApplicationController
     end
   end
 
+  def index
+    @repositories = Repository.all
+  end
+
   def show
     puts params
 

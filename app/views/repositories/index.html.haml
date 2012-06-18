@@ -1,0 +1,18 @@
+%h1 Repositories
+
+%table.repositories
+  %thead
+    %tr
+      %th
+        Repository
+      %th
+        Source
+
+  - @repositories.each do |repository|
+    %tr
+      %td
+        = repository.name
+      %td
+        = repository.path
+      %td
+        = link_to "View", repository_path(repository)

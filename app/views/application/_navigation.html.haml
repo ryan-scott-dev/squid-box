@@ -1,0 +1,5 @@
+#navigation
+  %ul
+    - menu_items.each do |menu_item|
+      %li{ :class => html_class[menu_item[:text]] }
+        = link_to menu_item[:text], menu_item[:path]

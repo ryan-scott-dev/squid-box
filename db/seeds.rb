@@ -13,3 +13,6 @@ user.password = "password"
 user.password_confirmation = "password"
 user.login = "rscott"
 user.save!
+
+repo = Repository.create({name: "Test Repository",
+                          path: "git://github.com/mojombo/grit.git"})
