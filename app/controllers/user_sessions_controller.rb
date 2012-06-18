@@ -6,14 +6,18 @@ class UserSessionsController < ApplicationController
   def create
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
-      redirect_to account_url
+      flash[:notice] = "Log in successful"
+      redirect_to home_path
     else
+      flash[:error] = "Invalid Login"
       render :action => :new
     end
   end
 
   def destroy
     current_user_session.destroy
-    redirect_to new_user_session_url
+
+    flash[:notice] = "Log out successful"
+    redirect_to home_path
   end
 end
