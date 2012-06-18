@@ -1,0 +1,5 @@
+%h1 Squid Box
+
+- if current_user_session.nil?
+  .login
+    = render :partial => "user_sessions/login", :locals => {:user_session => UserSession.new}
