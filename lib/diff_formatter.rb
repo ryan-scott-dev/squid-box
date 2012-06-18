@@ -38,8 +38,6 @@ module DiffFormatter
         @line_count += 1
     end
 
-    puts "Rendering output #{output}"
-
     output
   end
 
