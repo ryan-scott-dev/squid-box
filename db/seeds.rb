@@ -6,13 +6,14 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-
-user = User.new
-user.email = "ryan.scott@lambdasoftware.com.au"
-user.password = "password"
-user.password_confirmation = "password"
-user.login = "rscott"
-user.save!
+if User.all.blank?
+  user = User.new
+  user.email = "ryan.scott@lambdasoftware.com.au"
+  user.password = "password"
+  user.password_confirmation = "password"
+  user.login = "rscott"
+  user.save!
+end
 
 repo = Repository.create({name: "Test Repository",
                           path: "git://github.com/mojombo/grit.git"})

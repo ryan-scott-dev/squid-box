@@ -25,16 +25,15 @@ class Repository < ActiveRecord::Base
   end
 
   def ensure_repository_exists
-
     if File.directory? generate_local_path
-        return unless repo.bare
+      return if repo.config["remote.origin.url"] == path
 
       FileUtils.rm_rf generate_local_path
     end
 
     Dir.mkdir generate_local_path
 
-    remote_repo.clone({:quiet => false, :verbose => true, :progress => true}, path, generate_local_path)
+    remote_repo.clone({}, path, generate_local_path)
 
     self.has_local_clone = true
 
