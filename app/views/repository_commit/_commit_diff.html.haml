@@ -1,34 +1,42 @@
 .diff
   %table
-    - line_count = 0
+    - before_count = 1
+    - after_count = 1
+
     - diff.each do |line|
 
       %tr
-        %td.line-number
-          #{line_count}
+        %td.line-number-after
+          #{after_count}
+        %td.line-number-before
+          #{before_count}
 
         - case line
         - when /^(---|\+\+\+|\\\\)/
-          - line_count += 1
+          - before_count += 1
+          - after_count += 1
           %td.diff-comment
             %span
               #{line.chomp}
         - when /^\+/
-          - line_count += 1
+          - after_count += 1
           %td.ins
             %ins
               #{clean_line line}
         - when /^-/
+          - before_count += 1
           %td.del
             %del
               #{clean_line line}
         - when /^ /
-          - line_count += 1
+          - before_count += 1
+          - after_count += 1
           %td.unchanged
             %span
               #{clean_line line}
         - when /^@@/
-          - line_count += 1
+          - before_count += 1
+          - after_count += 1
           %td.diff-block-info
             %span
               #{line.chomp}
