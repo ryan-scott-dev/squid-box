@@ -3,12 +3,12 @@ $ ->
   currentrow = -1
   dragging = false
 
- 	$("tr").mousedown((ev) ->
+ 	$("td.line").mousedown((ev) ->
     if firstrow != -1 && currentrow != -1
       $(".highlight").removeClass("highlight")
 
-    firstrow = Number($(this).attr("data-line"))
-    currentrow = Number($(this).attr("data-line"))
+    firstrow = Number($(this).parent().attr("data-line"))
+    currentrow = Number($(this).parent().attr("data-line"))
 
     currentRow = -1
     dragging = true
@@ -18,9 +18,16 @@ $ ->
     ev.preventDefault()
   )
 
- 	$("tr").mouseup((ev) ->
+ 	$("td.line").mouseup((ev) ->
     dragging = false
   )
+
+  $('.add_comment a').click (event) ->
+    event.preventDefault()
+    insertCommentRow()
+
+  insertCommentRow = ->
+    alert("From " + firstrow + " to " + currentrow)
 
   highlight_rows = () ->
     if currentrow < firstrow
@@ -42,9 +49,9 @@ $ ->
       first.nextUntil(last, "tr").addClass("highlight")
 
 
-  $("tr").mousemove((ev) ->
+  $("td.line").mousemove((ev) ->
     if firstrow != -1 && dragging
-      currentrow = Number($(this).attr("data-line"))
+      currentrow = Number($(this).parent().attr("data-line"))
 
       highlight_rows()
 

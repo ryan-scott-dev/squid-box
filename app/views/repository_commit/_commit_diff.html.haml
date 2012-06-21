@@ -9,7 +9,7 @@
       %tr{:data => {:line => line_count}}
         - line_count += 1
         %td.add_comment
-          = link_to "+", ""
+          = link_to "+", "#"
         %td.line-number-after
           #{after_count}
         %td.line-number-before
@@ -19,28 +19,28 @@
         - when /^(---|\+\+\+|\\\\)/
           - before_count += 1
           - after_count += 1
-          %td.diff-comment
+          %td.line.diff-comment
             %span
               #{line.chomp}
         - when /^\+/
           - after_count += 1
-          %td.ins
+          %td.line.ins
             %ins
               #{clean_line line}
         - when /^-/
           - before_count += 1
-          %td.del
+          %td.line.del
             %del
               #{clean_line line}
         - when /^ /
           - before_count += 1
           - after_count += 1
-          %td.unchanged
+          %td.line.unchanged
             %span
               #{clean_line line}
         - when /^@@/
           - before_count += 1
           - after_count += 1
-          %td.diff-block-info
+          %td.line.diff-block-info
             %span
               #{line.chomp}
