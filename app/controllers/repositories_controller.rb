@@ -20,11 +20,13 @@ class RepositoriesController < ApplicationController
   end
 
   def show
-    puts params
-
     @repository = Repository.find(params[:id])
-    page = params[:page] ? params[:page] : 1
-    @commits = @repository.commits(page.to_i - 1)
-    @commit_pagination = WillPaginate::Collection.new(page, 10, @repository.total_commits)
+    @repository.ensure_repository_exists
+
+    if @repository.has_local_clone?
+      page = params[:page] ? params[:page] : 1
+      @commits = @repository.commits(page.to_i - 1)
+      @commit_pagination = WillPaginate::Collection.new(page, 10, @repository.total_commits)
+    end
   end
 end

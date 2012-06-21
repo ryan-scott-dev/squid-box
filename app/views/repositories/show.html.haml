@@ -1,44 +1,24 @@
 %h1
   = @repository.name
 
-.commits
-  %h2
-    Commits
+- if @repository.has_local_clone
+  = render :partial => "list_commits"
+- else
+  - if @repository.is_cloning
 
-  %table
-    %thead
-      %tr
-        %th
-          Date
-        %th
-          Author
-        %th
-          Message
-        %th
-          Changes
-        %th
-          Commit ID
-    - @commits.each do |commit|
-      %tr.commit
-        %td
-          #{I18n.l commit.date, :format => :short}
+    Cloning Repository...
 
-        %td
-          #{commit.author}
+  - else
 
-        %td
-          #{commit.short_message}
+    Unable to clone repository, please try the following:
+    %ul
+      %li
+        Check that the Path is correct
+      - if @repository.private?
+        %li
+          Please try the adding the following public key to your repository ssh keys
 
-        %td
-          .added
-            + #{commit.stats.additions}
-          .deleted
-            = "- #{commit.stats.deletions}"
+    - if @repository.private?
+      = text_area_tag "ssh-public-tag", @repository.public_key
 
-        %td
-          #{commit.id_abbrev}
-
-        %td
-          = link_to "View", "/repository/#{@repository.id}/commit/#{commit.id}"
-
-  = will_paginate @commit_pagination
+    = link_to_function "Try Cloning Again", repository_path(@repository)

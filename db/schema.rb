@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120618111656) do
+ActiveRecord::Schema.define(:version => 20120620095931) do
 
   create_table "repositories", :force => true do |t|
     t.string   "name"
@@ -20,6 +20,10 @@ ActiveRecord::Schema.define(:version => 20120618111656) do
     t.datetime "updated_at",      :null => false
     t.string   "local_path"
     t.boolean  "has_local_clone"
+    t.boolean  "is_cloning"
+    t.text     "public_key"
+    t.text     "private_key"
+    t.boolean  "private"
   end
 
   create_table "users", :force => true do |t|

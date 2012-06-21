@@ -1,11 +1,11 @@
 require 'fileutils'
 
 class Repository < ActiveRecord::Base
-  attr_accessible :name, :path
+  attr_accessible :name, :path, :private
 
   validates_presence_of :name, :path
-  validate :is_path_uri?, :is_path_git_repo?
 
+  before_save :generate_ssh_keys
   after_save :ensure_repository_exists
 
   def is_path_uri?
@@ -24,19 +24,73 @@ class Repository < ActiveRecord::Base
     repo.description
   end
 
+  def generate_ssh_keys
+    return unless self.private?
+    return if self.public_key.present? && self.private_key.present?
+
+    key = SSHKey.generate
+
+    self.private_key = key.private_key
+    self.public_key = key.ssh_public_key
+  end
+
   def ensure_repository_exists
     if File.directory? generate_local_path
-      return if repo.config["remote.origin.url"] == path
+      begin
+        if repo.config["remote.origin.url"] == path
+          self.has_local_clone = true
+          return
+        end
+      rescue
+      end
 
       FileUtils.rm_rf generate_local_path
     end
 
-    Dir.mkdir generate_local_path
+    Dir.mkdir "./repos" unless File.directory? "./repos"
+    Dir.mkdir generate_local_path unless File.directory? generate_local_path
 
-    remote_repo.clone({}, path, generate_local_path)
+    Dir.mkdir "./keys" unless File.directory? "./keys"
+    Dir.mkdir "./keys/#{id}" unless File.directory? "./keys/#{id}"
 
-    self.has_local_clone = true
+    File.open(private_key_path, "w") do |private_key_file|
+      private_key_file << private_key
+    end
+    File.chmod 0600, private_key_path
 
+    self.is_cloning = true
+
+    begin
+      clone
+    rescue
+    end
+
+    self.is_cloning = false
+
+    begin
+      self.has_local_clone = false
+
+      repo.present?
+
+      self.has_local_clone = true
+    rescue
+    end
+
+  end
+
+  def private_key_path
+    "./keys/#{id}/private_key"
+  end
+
+  def clone
+    clone_command = "git clone #{path} #{generate_local_path}"
+    final_command = clone_command
+    if self.private?
+      final_command = "ssh-agent bash -c 'ssh-add -D; ssh-add #{private_key_path}; #{clone_command}'"
+    end
+
+    puts final_command
+    system final_command
   end
 
   def commits(offset = 0, per_page = 10)

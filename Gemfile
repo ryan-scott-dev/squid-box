@@ -47,7 +47,9 @@ gem "diffy"
 
 gem 'will_paginate', '~> 3.0'
 
-gem "authlogic"
+gem 'authlogic'
+gem 'net-ssh'
+gem 'sshkey'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
