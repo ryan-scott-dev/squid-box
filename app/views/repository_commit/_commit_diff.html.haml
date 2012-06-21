@@ -2,10 +2,14 @@
   %table
     - before_count = 1
     - after_count = 1
+    - line_count = 1
 
     - diff.each do |line|
 
-      %tr
+      %tr{:data => {:line => line_count}}
+        - line_count += 1
+        %td.add_comment
+          = link_to "+", ""
         %td.line-number-after
           #{after_count}
         %td.line-number-before
