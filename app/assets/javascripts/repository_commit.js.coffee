@@ -27,7 +27,27 @@ $ ->
     insertCommentRow()
 
   insertCommentRow = ->
-    alert("From " + firstrow + " to " + currentrow)
+    $.ajax "/comments/new"
+      type: 'get'
+      success: (response_data, textStatus, jqXHR) ->
+        last = $('tr[data-line="' + currentrow + '"]')
+        last.after(response_data)
+        new_response = last.next()
+        file_diff_div = last.closest(".file-diff")
+        commit_div = last.closest(".diffs")
+
+        file_name = file_diff_div.attr("data-file")
+        repo_id = commit_div.attr("data-repository")
+        commit_id = commit_div.attr("data-commit")
+
+        new_response.find("#comment_start_line").val(firstrow)
+        new_response.find("#comment_end_line").val(currentrow)
+        new_response.find("#comment_file").val(file_name)
+        new_response.find("#comment_commit").val(commit_id)
+        new_response.find("#comment_repository_id").val(repo_id)
+
+      failure: (jqXHR, textStatus, errorThrown) ->
+        alert(textStatus)
 
   highlight_rows = () ->
     if currentrow < firstrow

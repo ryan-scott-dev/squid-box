@@ -1,0 +1,18 @@
+%tr
+  %td
+  %td
+  %td
+  %td
+    .commit-comment
+      = form_for @comment do |f|
+        = f.hidden_field :start_line
+        = f.hidden_field :end_line
+
+        = f.hidden_field :file
+        = f.hidden_field :commit
+        = f.hidden_field :repository_id
+
+        = f.label :content, "Comment"
+        = f.text_area :content
+
+        = f.submit "Create"
