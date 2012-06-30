@@ -5,7 +5,7 @@
     - line_count = 1
 
     - diff.each do |line|
-      - line_count += 1
+
       - line_comment = comments.find{|comment| line_count >= comment.start_line && line_count <= comment.end_line}
 
       - if line_comment.present?
@@ -19,8 +19,8 @@
       - if line_comment
         - line_style = "background: ##{line_comment.colour};"
 
-      %tr{:data => {:line => line_count - 1}}
-
+      %tr{:data => {:line => line_count}}
+        - line_count += 1
         %td.add_comment
           = link_to "+", "#"
         %td.line-number-after
@@ -33,33 +33,33 @@
           - before_count += 1
           - after_count += 1
           %td.line.diff-comment
-            %span
+            %pre
               #{line.chomp}
             .comment-line-background{:style => line_style}
         - when /^\+/
           - after_count += 1
           %td.line.ins
-            %ins
+            %pre
               #{clean_line line}
             .comment-line-background{:style => line_style}
         - when /^-/
           - before_count += 1
           %td.line.del
-            %del
+            %pre
               #{clean_line line}
             .comment-line-background{:style => line_style}
         - when /^ /
           - before_count += 1
           - after_count += 1
           %td.line.unchanged
-            %span
+            %pre
               #{clean_line line}
             .comment-line-background{:style => line_style}
         - when /^@@/
           - before_count += 1
           - after_count += 1
           %td.line.diff-block-info
-            %span
+            %pre
               #{line.chomp}
             .comment-line-background{:style => line_style}
 
@@ -72,7 +72,7 @@
             - elsif line_count > line_comment.start_line && line_count < line_comment.end_line
               = "|"
 
-      - if line_comment.present? && line_comment.end_line == line_count
+      - if line_comment.present? && line_comment.end_line == line_count - 1
         %tr.comment_end
           %td
           %td
