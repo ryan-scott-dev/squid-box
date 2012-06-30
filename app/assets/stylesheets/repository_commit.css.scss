@@ -9,7 +9,7 @@
   margin:0;
   padding:0;
   display:table;
-  width:100%;
+  width:60%;
   padding-left: 30px;
 }
 
@@ -53,13 +53,33 @@
   color:#b00
 }
 
+.diff td.line-number-before, .diff td.line-number-after{
+  vertical-align: top;
+}
+
 .diff tr:hover{
   background:#ffc
 }
 
 /* try 'whitespace:pre;' if you don't want lines to wrap */
-.diff del, .diff ins, .diff span{;font-family:courier;}
-.diff del strong{font-weight:normal;background:#fcc;}
-.diff ins strong{font-weight:normal;background:#9f9;}
-.diff td.diff-comment { display: none; }
-.diff td.diff-block-info { background: none repeat scroll 0 0 gray; }
+.diff del, .diff ins, .diff span{
+  font-family:courier;
+}
+
+.diff del strong{
+  font-weight:normal;
+  background:#fcc;
+}
+
+.diff ins strong{
+  font-weight:normal;
+  background:#9f9;
+}
+
+.diff td.diff-comment {
+  display: none;
+}
+
+.diff td.diff-block-info {
+  background: none repeat scroll 0 0 gray;
+}
