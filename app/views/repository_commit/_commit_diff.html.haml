@@ -5,9 +5,22 @@
     - line_count = 1
 
     - diff.each do |line|
+      - line_count += 1
+      - line_comment = comments.find{|comment| line_count >= comment.start_line && line_count <= comment.end_line}
 
-      %tr{:data => {:line => line_count}}
-        - line_count += 1
+      - if line_comment.present?
+        - if line_comment.start_line == line_count
+          %tr.comment_start
+            %td
+            %td
+            %td
+            %td{:style => "background: ##{line_comment.colour};"}
+      - line_style = ""
+      - if line_comment
+        - line_style = "background: ##{line_comment.colour};"
+
+      %tr{:data => {:line => line_count - 1}}
+
         %td.add_comment
           = link_to "+", "#"
         %td.line-number-after
@@ -22,25 +35,46 @@
           %td.line.diff-comment
             %span
               #{line.chomp}
+            .comment-line-background{:style => line_style}
         - when /^\+/
           - after_count += 1
           %td.line.ins
             %ins
               #{clean_line line}
+            .comment-line-background{:style => line_style}
         - when /^-/
           - before_count += 1
           %td.line.del
             %del
               #{clean_line line}
+            .comment-line-background{:style => line_style}
         - when /^ /
           - before_count += 1
           - after_count += 1
           %td.line.unchanged
             %span
               #{clean_line line}
+            .comment-line-background{:style => line_style}
         - when /^@@/
           - before_count += 1
           - after_count += 1
           %td.line.diff-block-info
             %span
               #{line.chomp}
+            .comment-line-background{:style => line_style}
+
+        %td.comments
+          - if line_comment.present?
+            - if line_comment.start_line == line_count
+              = "*"
+            - elsif line_comment.end_line == line_count
+              = "*"
+            - elsif line_count > line_comment.start_line && line_count < line_comment.end_line
+              = "|"
+
+      - if line_comment.present? && line_comment.end_line == line_count
+        %tr.comment_end
+          %td
+          %td
+          %td
+          %td{:style => "background: ##{line_comment.colour};"}

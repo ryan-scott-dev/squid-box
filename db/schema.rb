@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120625101928) do
+ActiveRecord::Schema.define(:version => 20120630055936) do
 
   create_table "comments", :force => true do |t|
     t.text     "content"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20120625101928) do
     t.integer  "repository_id"
     t.integer  "start_line"
     t.integer  "end_line"
+    t.string   "colour"
   end
 
   create_table "repositories", :force => true do |t|

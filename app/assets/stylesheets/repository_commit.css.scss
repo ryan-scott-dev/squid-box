@@ -1,79 +1,84 @@
-.diff{
-  overflow:auto;
+.diff {
+  overflow: auto;
 }
 
-.diff table{
-  background:#fff;
-  overflow:auto;
-  font-size:13px;
-  margin:0;
-  padding:0;
-  display:table;
-  width:60%;
-  padding-left: 30px;
-}
-
-.diff del, .diff ins{
-  display:block;
-  text-decoration:none;
-}
-
-.diff td{
-  padding:0;
+.diff table {
+  background: #fff;
+  overflow: auto;
+  font-size: 13px;
   margin: 0;
-  height:1em;
+  padding: 0;
+  display: table;
+  width: 80%;
+  padding-left: 30px;
+  border-spacing: 2px 0px;
+}
+
+.diff del, .diff ins {
+  display: block;
+  text-decoration: none;
+}
+
+.diff td {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  height: 1em;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -o-user-select: none;
   user-select: none;
 }
-.diff tr.highlight{
+
+.diff tr.highlight {
   background: #ecf2ff
 }
 
 .diff td.add_comment {
-  position:absolute;
   opacity: 0;
   width: 25px;
   margin-left: -25px;
 }
 
-.diff td.add_comment a{
+.diff td.add_comment a {
   text-decoration: none;
 }
 
-.diff td.ins{
-  background:#dfd;
-  color:#080
+.diff td.ins {
+  background: #dfd;
+  color: #080
 }
 
-.diff td.del{
-  background:#fee;
-  color:#b00
+.diff td.del {
+  background: #fee;
+  color: #b00
 }
 
-.diff td.line-number-before, .diff td.line-number-after{
+.diff td.line-number-before, .diff td.line-number-after {
   vertical-align: top;
+  width: 40px;
 }
 
-.diff tr:hover{
-  background:#ffc
+.diff tr:hover {
+  background: #ffc
 }
 
 /* try 'whitespace:pre;' if you don't want lines to wrap */
-.diff del, .diff ins, .diff span{
-  font-family:courier;
+.diff del, .diff ins, .diff span {
+  font-family: courier;
+  position: relative;
+  z-index: 5;
 }
 
-.diff del strong{
-  font-weight:normal;
-  background:#fcc;
+.diff del strong {
+  font-weight: normal;
+  background: #fcc;
 }
 
-.diff ins strong{
-  font-weight:normal;
-  background:#9f9;
+.diff ins strong {
+  font-weight: normal;
+  background: #9f9;
 }
 
 .diff td.diff-comment {
@@ -82,4 +87,25 @@
 
 .diff td.diff-block-info {
   background: none repeat scroll 0 0 gray;
+}
+
+.diff td.comments {
+  width: 100px;
+}
+
+.diff tr.comment_start td, .diff tr.comment_end td {
+  height: 3px;
+}
+
+.diff .comment-line-background {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+/* These three lines are for transparency in all browsers. */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+  filter: alpha(opacity = 30);
+  opacity: .3;
 }
