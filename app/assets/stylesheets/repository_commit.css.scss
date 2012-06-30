@@ -100,8 +100,8 @@
   width: 100%;
   height: 100%;
   z-index: 1;
-/* These three lines are for transparency in all browsers. */
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
-  filter: alpha(opacity = 30);
-  opacity: .3;
+  /* These three lines are for transparency in all browsers. */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity = 20);
+  opacity: .2;
 }

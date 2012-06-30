@@ -65,12 +65,8 @@
 
         %td.comments
           - if line_comment.present?
-            - if line_comment.start_line == line_count
+            - if line_comment.start_line == line_count - 1
               = "*"
-            - elsif line_comment.end_line == line_count
-              = "*"
-            - elsif line_count > line_comment.start_line && line_count < line_comment.end_line
-              = "|"
 
       - if line_comment.present? && line_comment.end_line == line_count - 1
         %tr.comment_end
