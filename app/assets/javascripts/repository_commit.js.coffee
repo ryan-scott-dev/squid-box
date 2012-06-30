@@ -3,9 +3,14 @@ $ ->
   currentrow = -1
   dragging = false
 
- 	$("td.line").mousedown((ev) ->
+  removeRowHighlighting = () ->
     if firstrow != -1 && currentrow != -1
       $(".highlight").removeClass("highlight")
+
+
+  $("td.line").mousedown((ev) ->
+    removeRowHighlighting()
+    hideNewComments()
 
     firstrow = Number($(this).parent().attr("data-line"))
     currentrow = Number($(this).parent().attr("data-line"))
@@ -18,7 +23,7 @@ $ ->
     ev.preventDefault()
   )
 
- 	$("td.line").mouseup((ev) ->
+  $("td.line").mouseup((ev) ->
     dragging = false
   )
 
@@ -51,21 +56,21 @@ $ ->
 
   saveCommentRow = (event) ->
     event.preventDefault()
-    form = $(this)
-    valuesToSubmit = form.serialize()
+    valuesToSubmit = $(this).serialize()
     $.ajax "/comments"
       type: "post"
       data: valuesToSubmit
       dataType: "JSON"
       success: (response_data, textStatus, jqXHR) ->
-        hide_comment_row(form)
+        hideNewComments()
+        removeRowHighlighting()
       failure: (jqXHR, textStatus, errorThrown) ->
         alert(textStatus)
     return false
 
-  hide_comment_row = (form) ->
-    row = form.parents("tr.comment-row")
-    row.remove()
+  hideNewComments = () ->
+    rows = $("tr.new-comment-row")
+    rows.remove()
 
   highlight_rows = () ->
     if currentrow < firstrow
