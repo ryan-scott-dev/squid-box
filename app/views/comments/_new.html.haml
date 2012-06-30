@@ -1,10 +1,10 @@
-%tr
+%tr.comment-row
   %td
   %td
   %td
   %td
     .commit-comment
-      = form_for @comment do |f|
+      = form_for @comment, :remote => true, :format => :js do |f|
         = f.hidden_field :start_line
         = f.hidden_field :end_line
 
@@ -15,4 +15,4 @@
         = f.label :content, "Comment"
         = f.text_area :content
 
-        = f.submit "Create"
+        = f.submit "Create", :id => "submit_comment"

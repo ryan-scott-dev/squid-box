@@ -45,9 +45,27 @@ $ ->
         new_response.find("#comment_file").val(file_name)
         new_response.find("#comment_commit").val(commit_id)
         new_response.find("#comment_repository_id").val(repo_id)
-
+        new_response.find("form").submit(saveCommentRow)
       failure: (jqXHR, textStatus, errorThrown) ->
         alert(textStatus)
+
+  saveCommentRow = (event) ->
+    event.preventDefault()
+    form = $(this)
+    valuesToSubmit = form.serialize()
+    $.ajax "/comments"
+      type: "post"
+      data: valuesToSubmit
+      dataType: "JSON"
+      success: (response_data, textStatus, jqXHR) ->
+        hide_comment_row(form)
+      failure: (jqXHR, textStatus, errorThrown) ->
+        alert(textStatus)
+    return false
+
+  hide_comment_row = (form) ->
+    row = form.parents("tr.comment-row")
+    row.remove()
 
   highlight_rows = () ->
     if currentrow < firstrow
