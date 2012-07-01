@@ -21,12 +21,13 @@
       %br
 
       .file-name
-        - if diff.a_path != diff.b_path
-          #{diff.a_path} ==> #{diff.b_path}
-        - else
-          = diff.a_path
+        %h3
+          - if diff.a_path != diff.b_path
+            #{diff.a_path} ==> #{diff.b_path}
+          - else
+            = diff.a_path
 
-      .line-diff
+      %fieldset.line-diff
         - # only need to check the original
         - original = diff.a_blob.nil? ? nil : diff.a_blob.data
 
