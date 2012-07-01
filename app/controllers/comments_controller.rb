@@ -17,6 +17,9 @@ class CommentsController < ApplicationController
   end
 
   def show
+    comment = Comment.find(params[:id])
+
+    render :partial => "show", :locals => {:comment => comment}
   end
 
   def index

@@ -1,2 +1,18 @@
-.comment-hint{:rowspan => comment.line_length}
-  = "_"
+%tr.show-comment-row
+  %td
+  %td
+  %td
+  %td
+    %fieldset.commit-comment
+      .content
+        = comment.content
+
+      .controls
+        .close
+          Close
+
+        .edit
+          Edit
+
+        .del
+          Delete

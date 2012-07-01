@@ -8,17 +8,6 @@
 
       - line_comment = comments.find{|comment| line_count >= comment.start_line && line_count <= comment.end_line}
 
-      - if line_comment.present?
-        - if line_comment.start_line == line_count
-          %tr.comment_start
-            %td
-            %td
-            %td
-            %td{:style => "background: ##{line_comment.colour};"}
-      - line_style = ""
-      - if line_comment
-        - line_style = "background: ##{line_comment.colour};"
-
       %tr{:data => {:line => line_count}}
         - line_count += 1
         %td.add_comment
@@ -35,42 +24,35 @@
           %td.line.diff-comment
             %pre
               #{line.chomp}
-            .comment-line-background{:style => line_style}
+            .comment-line-background
         - when /^\+/
           - after_count += 1
           %td.line.ins
             %pre
               #{clean_line line}
-            .comment-line-background{:style => line_style}
+            .comment-line-background
         - when /^-/
           - before_count += 1
           %td.line.del
             %pre
               #{clean_line line}
-            .comment-line-background{:style => line_style}
+            .comment-line-background
         - when /^ /
           - before_count += 1
           - after_count += 1
           %td.line.unchanged
             %pre
               #{clean_line line}
-            .comment-line-background{:style => line_style}
+            .comment-line-background
         - when /^@@/
           - before_count += 1
           - after_count += 1
           %td.line.diff-block-info
             %pre
               #{line.chomp}
-            .comment-line-background{:style => line_style}
+            .comment-line-background
 
         %td.comments
           - if line_comment.present?
             - if line_comment.start_line == line_count - 1
-              = "*"
-
-      - if line_comment.present? && line_comment.end_line == line_count - 1
-        %tr.comment_end
-          %td
-          %td
-          %td
-          %td{:style => "background: ##{line_comment.colour};"}
+              = link_to "*", "#", :data => {:id => line_comment.id, :start => line_comment.start_line, :end => line_comment.end_line}

@@ -3,8 +3,8 @@
   %td
   %td
   %td
-    .commit-comment
-      = form_for @comment, :remote => true, :format => :js do |f|
+    %fieldset.commit-comment
+      = form_for @comment do |f|
         = f.hidden_field :start_line
         = f.hidden_field :end_line
 
@@ -12,7 +12,12 @@
         = f.hidden_field :commit
         = f.hidden_field :repository_id
 
-        = f.label :content, "Comment"
-        = f.text_area :content
+        .content
+          = f.text_area :content
 
-        = f.submit "Create", :id => "submit_comment"
+        .controls
+          .del
+            Cancel
+
+          .create
+            = link_to 'Save', "#", :id => "save_new_comment"

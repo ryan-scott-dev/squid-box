@@ -7,7 +7,6 @@ $ ->
     if firstrow != -1 && currentrow != -1
       $(".highlight").removeClass("highlight")
 
-
   $("td.line").mousedown((ev) ->
     removeRowHighlighting()
     hideNewComments()
@@ -27,9 +26,23 @@ $ ->
     dragging = false
   )
 
+  focusRows = (firstRow, lastRow) ->
+    first = $('tr[data-line="1"]')
+    last = $('tr[data-line="1"]')
+    beginning = $('tr[data-line="' + firstRow + '"]')
+    end = $('tr[data-line="' + lastRow + '"]')
+
+    previousRows = beginning.prevUntil(first, "tr")
+    nextRows = end.nextUntil(last, "tr")
+
+    previousRows.addClass("faded")
+    nextRows.addClass("faded")
+
   $('.add_comment a').click (event) ->
     event.preventDefault()
-    insertCommentRow()
+    if $("tr.new-comment-row").length == 0
+      insertCommentRow()
+      focusHighlightedRows(firstrow, currentrow)
 
   insertCommentRow = ->
     $.ajax "/comments/new"
@@ -51,8 +64,27 @@ $ ->
         new_response.find("#comment_commit").val(commit_id)
         new_response.find("#comment_repository_id").val(repo_id)
         new_response.find("form").submit(saveCommentRow)
+        new_response.find("#save_new_comment").click (event) ->
+          event.preventDefault()
+          new_response.find("form").submit()
+
       failure: (jqXHR, textStatus, errorThrown) ->
         alert(textStatus)
+
+  $("td.comments a").click (event) ->
+    event.preventDefault()
+    showComment($(this).attr("data-id"), $(this).attr("data-start"), $(this).attr("data-end"))
+
+  showComment = (commentId, startLine, endLine) ->
+    focusRows(startLine, endLine)
+    $.ajax "/comments/" + commentId,
+      type: "get"
+      success: (responseData, textStatus, jqXHR) ->
+        last = $('tr[data-line="' + endLine + '"]')
+        last.after(responseData)
+      failure: (jqXHR, textStatus, errorThrown) ->
+        alert(textStatus)
+
 
   saveCommentRow = (event) ->
     event.preventDefault()
@@ -69,8 +101,10 @@ $ ->
     return false
 
   hideNewComments = () ->
-    rows = $("tr.new-comment-row")
-    rows.remove()
+    newCommentRows = $("tr.new-comment-row")
+    newCommentRows.remove()
+
+    $("tr.faded").removeClass("faded")
 
   highlight_rows = () ->
     if currentrow < firstrow
