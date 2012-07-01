@@ -55,4 +55,4 @@
         %td.comments
           - if line_comment.present?
             - if line_comment.start_line == line_count - 1
-              = link_to "*", "#", :data => {:id => line_comment.id, :start => line_comment.start_line, :end => line_comment.end_line}
+              = link_to "*", "#", :data => {:id => line_comment.id, :file => line_comment.file, :start => line_comment.start_line, :end => line_comment.end_line}

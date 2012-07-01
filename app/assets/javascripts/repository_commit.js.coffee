@@ -2,6 +2,7 @@ $ ->
   firstrow = -1
   currentrow = -1
   dragging = false
+  parentFile = null
 
   removeRowHighlighting = () ->
     if firstrow != -1 && currentrow != -1
@@ -13,6 +14,7 @@ $ ->
 
     firstrow = Number($(this).parent().attr("data-line"))
     currentrow = Number($(this).parent().attr("data-line"))
+    parentFile = $(this).closest(".file-diff")
 
     currentRow = -1
     dragging = true
@@ -26,11 +28,11 @@ $ ->
     dragging = false
   )
 
-  focusRows = (firstRow, lastRow) ->
-    first = $('tr[data-line="1"]')
-    last = $('tr[data-line="1"]')
-    beginning = $('tr[data-line="' + firstRow + '"]')
-    end = $('tr[data-line="' + lastRow + '"]')
+  focusRows = (fileDiv, firstRow, lastRow) ->
+    first = fileDiv.find('tr[data-line="1"]')
+    last = fileDiv.find('tr[data-line="1"]')
+    beginning = fileDiv.find('tr[data-line="' + firstRow + '"]')
+    end = fileDiv.find('tr[data-line="' + lastRow + '"]')
 
     previousRows = beginning.prevUntil(first, "tr")
     nextRows = end.nextUntil(last, "tr")
@@ -42,13 +44,14 @@ $ ->
     event.preventDefault()
     if $("tr.new-comment-row").length == 0
       insertCommentRow()
-      focusHighlightedRows(firstrow, currentrow)
+      fileDiv = $(this).closest(".file-diff")
+      focusRows(fileDiv, firstrow, currentrow)
 
   insertCommentRow = ->
     $.ajax "/comments/new"
       type: 'get'
       success: (response_data, textStatus, jqXHR) ->
-        last = $('tr[data-line="' + currentrow + '"]')
+        last = parentFile.find('tr[data-line="' + currentrow + '"]')
         last.after(response_data)
         new_response = last.next()
         file_diff_div = last.closest(".file-diff")
@@ -73,14 +76,18 @@ $ ->
 
   $("td.comments a").click (event) ->
     event.preventDefault()
-    showComment($(this).attr("data-id"), $(this).attr("data-start"), $(this).attr("data-end"))
+    fileDiv = $(this).closest(".file-diff")
+    id = $(this).attr("data-id")
 
-  showComment = (commentId, startLine, endLine) ->
-    focusRows(startLine, endLine)
+    if fileDiv.find('tr.show-comment-row[data-id="' + id + '"]').length == 0
+      showComment(id, fileDiv, $(this).attr("data-start"), $(this).attr("data-end"))
+
+  showComment = (commentId, fileDiv, startLine, endLine) ->
+    focusRows(fileDiv, startLine, endLine)
     $.ajax "/comments/" + commentId,
       type: "get"
       success: (responseData, textStatus, jqXHR) ->
-        last = $('tr[data-line="' + endLine + '"]')
+        last = fileDiv.find('tr[data-line="' + endLine + '"]')
         last.after(responseData)
       failure: (jqXHR, textStatus, errorThrown) ->
         alert(textStatus)
@@ -112,11 +119,11 @@ $ ->
       firstrow = currentrow
       currentrow = temp
 
-    first = $('tr[data-line="' + firstrow + '"]')
-    last = $('tr[data-line="' + currentrow + '"]')
+    first = parentFile.find('tr[data-line="' + firstrow + '"]')
+    last = parentFile.find('tr[data-line="' + currentrow + '"]')
 
-    $(".highlight").removeClass("highlight")
-    $("td.add_comment").css("opacity", 0)
+    parentFile.find(".highlight").removeClass("highlight")
+    parentFile.find("td.add_comment").css("opacity", 0)
 
     first.addClass("highlight")
     last.addClass("highlight")
