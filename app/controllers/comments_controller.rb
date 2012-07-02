@@ -10,7 +10,9 @@ class CommentsController < ApplicationController
     @comment = Comment.new(params[:comment])
 
     if @comment.save
-      render :json => {:success => true}
+      html = render_to_string :partial => "comments/line", :locals => {:comment => @comment}
+
+      render :json => {:success => true, :data => html}
     else
       render :json => {:success => false}
     end

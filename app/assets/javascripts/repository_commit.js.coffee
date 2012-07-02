@@ -125,10 +125,21 @@ $ ->
       data: valuesToSubmit
       dataType: "JSON"
       success: (response_data, textStatus, jqXHR) ->
+        first = parentFile.find('tr[data-line="' + firstrow + '"]')
+        comment = first.find("td.comments")
+        comment.append(response_data.data)
+
+        comment.find("a").click (event) ->
+          event.preventDefault()
+          fileDiv = $(this).closest(".file-diff")
+          id = $(this).attr("data-id")
+
+          if fileDiv.find('tr.show-comment-row[data-id="' + id + '"]').length == 0
+            showComment(id, fileDiv, $(this).attr("data-start"), $(this).attr("data-end"))
+
+
         hideNewComments()
         removeRowHighlighting()
-      failure: (jqXHR, textStatus, errorThrown) ->
-        alert(textStatus)
     return false
 
   hideNewComments = () ->
