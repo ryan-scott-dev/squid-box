@@ -24,4 +24,11 @@ class CommentsController < ApplicationController
 
   def index
   end
+
+  def destroy
+    @comment = Comment.find(params[:id])
+    @comment.destroy
+
+    render :nothing => true, :status => :ok
+  end
 end

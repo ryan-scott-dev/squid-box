@@ -11,8 +11,10 @@
         .btn.btn-warning
           Edit
 
-        .btn.btn-danger
-          Delete
+        = link_to comment, :method => :delete, :remote => true, :id => "delete_commit_comment" do
+          .btn.btn-danger
+            Delete
 
-        .hide.btn.btn-info
-          = link_to "Close", "#", :id => "close_commit_comment"
+        = link_to "#", :remote => true, :id => "close_commit_comment" do
+          .hide.btn.btn-info
+            Close

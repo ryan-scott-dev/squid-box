@@ -106,6 +106,13 @@ $ ->
           removeFading(last.closest(".file-diff"))
           commentForm.remove()
 
+        commentForm.find("#delete_commit_comment").click (event) ->
+          removeRowHighlighting()
+          removeFading(last.closest(".file-diff"))
+          commentForm.remove()
+
+          $('td.comments a[data-id="' + commentId + '"]').remove()
+
       failure: (jqXHR, textStatus, errorThrown) ->
         alert(textStatus)
 
@@ -148,7 +155,6 @@ $ ->
 
     if firstrow != currentrow
       first.nextUntil(last, "tr").addClass("highlight")
-
 
   $("td.line").mousemove((ev) ->
     if firstrow != -1 && dragging
