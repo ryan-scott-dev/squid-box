@@ -76,8 +76,12 @@
   background: #fcc;
 }
 
-.diff .controls .create a{
+.diff .controls a{
   color:inherit;
+}
+
+.diff .controls .hide {
+  float: right;
 }
 
 .diff .controls .btn{

@@ -3,7 +3,7 @@
   %td
   %td
   %td
-    %fieldset.commit-comment
+    .commit-comment
       = form_for @comment do |f|
         = f.hidden_field :start_line
         = f.hidden_field :end_line
@@ -16,8 +16,8 @@
           = f.text_area :content
 
         .controls
-          .close.btn.btn-danger
-            Cancel
+          .hide.btn.btn-danger
+            = link_to "Cancel", "#", :id => "close_new_comment"
 
-          .create.btn.btn-primary
+          .btn.btn-primary
             = link_to 'Create', "#", :id => "save_new_comment"

@@ -8,6 +8,9 @@ $ ->
     if firstrow != -1 && currentrow != -1
       $(".highlight").removeClass("highlight")
 
+  removeFading = (fileDiv) ->
+    fileDiv.find("tr.faded").removeClass("faded")
+
   $("td.line").mousedown((ev) ->
     removeRowHighlighting()
     hideNewComments()
@@ -70,6 +73,12 @@ $ ->
         new_response.find("#save_new_comment").click (event) ->
           event.preventDefault()
           new_response.find("form").submit()
+
+        new_response.find("#close_new_comment").click (event) ->
+          event.preventDefault()
+          removeRowHighlighting()
+          removeFading(new_response.closest(".file-diff"))
+          new_response.remove()
 
       failure: (jqXHR, textStatus, errorThrown) ->
         alert(textStatus)
