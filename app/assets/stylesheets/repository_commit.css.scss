@@ -9,7 +9,6 @@
   margin: 0;
   padding: 0;
   display: table;
-  width: 80%;
   padding-left: 30px;
   border-spacing: 2px 0px;
 }
@@ -32,8 +31,8 @@
 
 .diff td.add_comment {
   opacity: 0;
-  width: 25px;
-  margin-left: -25px;
+  width: 10px;
+  margin-left: -10px;
 }
 
 .diff td.add_comment a {
@@ -52,7 +51,7 @@
 
 .diff td.line-number-before, .diff td.line-number-after {
   vertical-align: top;
-  width: 40px;
+  width: 5px;
 }
 
 .diff tr:hover td.line {
@@ -65,11 +64,24 @@
   position: relative;
   z-index: 5;
   margin: 0px;
+  white-space: pre-wrap;
+  border: none;
+  background: none;
+  word-break: break-all;
+  padding: 0px;
 }
 
 .diff del strong {
   font-weight: normal;
   background: #fcc;
+}
+
+.diff .controls .create a{
+  color:inherit;
+}
+
+.diff .controls .btn{
+  margin: 4px;
 }
 
 .diff ins strong {
@@ -86,6 +98,10 @@
 }
 
 .diff td.comments {
+  width: 100px;
+}
+
+.diff td.comments a {
   width: 100px;
 }
 

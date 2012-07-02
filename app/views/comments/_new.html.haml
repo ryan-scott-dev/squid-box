@@ -16,8 +16,8 @@
           = f.text_area :content
 
         .controls
-          .del
+          .close.btn.btn-danger
             Cancel
 
-          .create
-            = link_to 'Save', "#", :id => "save_new_comment"
+          .create.btn.btn-primary
+            = link_to 'Create', "#", :id => "save_new_comment"

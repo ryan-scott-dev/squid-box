@@ -6,6 +6,10 @@ module ApplicationHelper
     end
   end
 
+  def messages flash
+    render :partial => 'messages', :locals => {:flash => flash}
+  end
+
   def navigation_menu
       menu_items = [ { :text => "Home", :path => home_path },
                      { :text => "Repositories", :path => repositories_path } ]
