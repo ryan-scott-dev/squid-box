@@ -98,6 +98,14 @@ $ ->
       success: (responseData, textStatus, jqXHR) ->
         last = fileDiv.find('tr[data-line="' + endLine + '"]')
         last.after(responseData)
+        commentForm = last.next()
+
+        commentForm.find("#close_commit_comment").click (event) ->
+          event.preventDefault()
+          removeRowHighlighting()
+          removeFading(last.closest(".file-diff"))
+          commentForm.remove()
+
       failure: (jqXHR, textStatus, errorThrown) ->
         alert(textStatus)
 

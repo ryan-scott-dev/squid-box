@@ -8,11 +8,11 @@
         = comment.content
 
       .controls
-        .hide.btn.btn-info
-          Close
-
         .btn.btn-warning
           Edit
 
         .btn.btn-danger
           Delete
+
+        .hide.btn.btn-info
+          = link_to "Close", "#", :id => "close_commit_comment"
