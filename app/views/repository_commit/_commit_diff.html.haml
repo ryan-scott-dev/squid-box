@@ -1,4 +1,4 @@
-.diff
+.diff.container
   %table
     - before_count = 1
     - after_count = 1
@@ -22,33 +22,33 @@
           - before_count += 1
           - after_count += 1
           %td.line.diff-comment
-            %pre
+            %pre.prettyprint
               #{line.chomp}
             .comment-line-background
         - when /^\+/
           - after_count += 1
           %td.line.ins
-            %pre
+            %pre.prettyprint
               #{clean_line line}
             .comment-line-background
         - when /^-/
           - before_count += 1
           %td.line.del
-            %pre
+            %pre.prettyprint
               #{clean_line line}
             .comment-line-background
         - when /^ /
           - before_count += 1
           - after_count += 1
           %td.line.unchanged
-            %pre
+            %pre.prettyprint
               #{clean_line line}
             .comment-line-background
         - when /^@@/
           - before_count += 1
           - after_count += 1
           %td.line.diff-block-info
-            %pre
+            %pre.prettyprint
               #{line.chomp}
             .comment-line-background
 
