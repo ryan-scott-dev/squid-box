@@ -2,7 +2,7 @@
   %h2
     Commits
 
-  %table
+  %table.table
     %thead
       %tr
         %th
@@ -14,17 +14,17 @@
         %th
           Changes
         %th
-          Commit ID
+          Commit
     - @commits.each do |commit|
-      %tr.commit
+      %tr.commit{:data => {:url => "/repository/#{@repository.id}/commit/#{commit.id}"}}
         %td
           #{I18n.l commit.date, :format => :short}
 
         %td
-          #{commit.author}
+          #{trim_string commit.author.name, 20}
 
-        %td
-          #{commit.short_message}
+        %td.name
+          #{trim_string commit.short_message, 120}
 
         %td
           .added
@@ -34,8 +34,5 @@
 
         %td
           #{commit.id_abbrev}
-
-        %td
-          = link_to "View", "/repository/#{@repository.id}/commit/#{commit.id}"
 
   = will_paginate @commit_pagination

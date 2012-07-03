@@ -12,3 +12,15 @@
   width: 320px;
   height: 120px;
 }
+
+.btn.new-repository{
+  float: right;
+}
+
+tr.commit:hover{
+  cursor: pointer;
+}
+
+tr.commit:hover td.name{
+  text-decoration: underline;
+}

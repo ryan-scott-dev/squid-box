@@ -1,8 +1,10 @@
 %h1 Repositories
 
-= link_to "Add Repository", new_repository_path
+= link_to new_repository_path, :id => "new_repository_link" do
+  .btn.btn-primary.new-repository
+    Add Repository
 
-%table.repositories
+%table.repositories.table
   %thead
     %tr
       %th
