@@ -6,7 +6,7 @@
 
     - diff.each do |line|
 
-      - line_comment = comments.find{|comment| line_count >= comment.start_line && line_count <= comment.end_line}
+      - line_comments = comments.find_all{|comment| line_count == comment.start_line}
 
       %tr{:data => {:line => line_count}}
         - line_count += 1
@@ -53,6 +53,5 @@
             .comment-line-background
 
         %td.comments
-          - if line_comment.present?
-            - if line_comment.start_line == line_count - 1
-              = render :partial => "comments/line", :locals => {:comment => line_comment}
+          - line_comments.each do |line_comment|
+            = render :partial => "comments/line", :locals => {:comment => line_comment}

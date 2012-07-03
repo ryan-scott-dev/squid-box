@@ -57,31 +57,34 @@ $ ->
         last = parentFile.find('tr[data-line="' + currentrow + '"]')
         last.after(response_data)
         new_response = last.next()
-        file_diff_div = last.closest(".file-diff")
-        commit_div = last.closest(".diffs")
 
-        file_name = file_diff_div.attr("data-file")
-        repo_id = commit_div.attr("data-repository")
-        commit_id = commit_div.attr("data-commit")
-
-        new_response.find("#comment_start_line").val(firstrow)
-        new_response.find("#comment_end_line").val(currentrow)
-        new_response.find("#comment_file").val(file_name)
-        new_response.find("#comment_commit").val(commit_id)
-        new_response.find("#comment_repository_id").val(repo_id)
-        new_response.find("form").submit(saveCommentRow)
-        new_response.find("#save_new_comment").click (event) ->
-          event.preventDefault()
-          new_response.find("form").submit()
-
-        new_response.find("#close_new_comment").click (event) ->
-          event.preventDefault()
-          removeRowHighlighting()
-          removeFading(new_response.closest(".file-diff"))
-          new_response.remove()
+        prepareNewCommentForm(new_response)
 
       failure: (jqXHR, textStatus, errorThrown) ->
         alert(textStatus)
+
+  prepareNewCommentForm = (newForm) ->
+    file_diff_div = newForm.closest(".file-diff")
+    commit_div = newForm.closest(".diffs")
+
+    file_name = file_diff_div.attr("data-file")
+    repo_id = commit_div.attr("data-repository")
+    commit_id = commit_div.attr("data-commit")
+
+    newForm.find("#comment_start_line").val(firstrow)
+    newForm.find("#comment_end_line").val(currentrow)
+    newForm.find("#comment_file").val(file_name)
+    newForm.find("#comment_commit").val(commit_id)
+    newForm.find("#comment_repository_id").val(repo_id)
+    newForm.find("form").submit(saveCommentRow)
+    newForm.find("#save_new_comment").click (event) ->
+      event.preventDefault()
+      newForm.find("form").submit()
+
+    newForm.find("#close_new_comment").click (event) ->
+      event.preventDefault()
+      removeRemoveAndResetCode(newForm)
+
 
   $("td.comments a").click (event) ->
     event.preventDefault()
@@ -102,20 +105,20 @@ $ ->
 
         commentForm.find("#close_commit_comment").click (event) ->
           event.preventDefault()
-          removeRowHighlighting()
-          removeFading(last.closest(".file-diff"))
-          commentForm.remove()
+          removeRemoveAndResetCode(commentForm)
 
         commentForm.find("#delete_commit_comment").click (event) ->
-          removeRowHighlighting()
-          removeFading(last.closest(".file-diff"))
-          commentForm.remove()
-
+          event.preventDefault()
+          removeRemoveAndResetCode(commentForm)
           $('td.comments a[data-id="' + commentId + '"]').remove()
 
       failure: (jqXHR, textStatus, errorThrown) ->
         alert(textStatus)
 
+  removeRemoveAndResetCode = (toRemove) ->
+    removeRowHighlighting()
+    removeFading(toRemove.closest(".file-diff"))
+    toRemove.remove()
 
   saveCommentRow = (event) ->
     event.preventDefault()
