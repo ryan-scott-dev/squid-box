@@ -1,4 +1,6 @@
 $ ->
+  prettyPrint()
+
   firstrow = -1
   currentrow = -1
   dragging = false
@@ -161,11 +163,11 @@ $ ->
     last = parentFile.find('tr[data-line="' + currentrow + '"]')
 
     parentFile.find(".highlight").removeClass("highlight")
-    parentFile.find("td.add_comment").css("opacity", 0)
+    parentFile.find("td.add_comment a").css("opacity", 0)
 
     first.addClass("highlight")
     last.addClass("highlight")
-    last.find("td.add_comment").css("opacity", 100)
+    last.find("td.add_comment a").css("opacity", 100)
 
     if firstrow != currentrow
       first.nextUntil(last, "tr").addClass("highlight")

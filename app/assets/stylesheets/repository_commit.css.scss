@@ -11,6 +11,7 @@
   display: table;
   padding-left: 30px;
   border-spacing: 2px 0px;
+  border: 1px solid #DDD;
 }
 
 .diff td {
@@ -25,17 +26,18 @@
   user-select: none;
 }
 
-.diff tr.highlight td.line {
+.diff tr.highlight td.line, .diff tr.highlight td.line-number {
   background: #ecf2ff
 }
 
 .diff td.add_comment {
-  opacity: 0;
   width: 10px;
   margin-left: -10px;
+  background-color: #ECECEC;
 }
 
 .diff td.add_comment a {
+  opacity: 0;
   text-decoration: none;
 }
 
@@ -49,12 +51,7 @@
   color: #b00
 }
 
-.diff td.line-number-before, .diff td.line-number-after {
-  vertical-align: top;
-  width: 5px;
-}
-
-.diff tr:hover td.line {
+.diff tr.code:hover td.line, .diff tr.code:hover td.line-number {
   background: #ffc
 }
 
@@ -133,4 +130,27 @@
 
 .commit-comment .controls div{
   display: inline;
+}
+
+.diff td.line{
+  border-right: 1px solid #DDD;
+}
+
+.diff tr.show-comment-row{
+  border-top: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
+}
+
+.diff td.comments{
+  background-color: #ECECEC;
+}
+
+.diff td.line-number{
+  background-color: #ECECEC;
+  text-align: center;
+  border-right: 1px solid #DDD;
+  border-left: 1px solid #DDD;
+
+  vertical-align: top;
+  width: 5px;
 }

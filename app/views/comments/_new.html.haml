@@ -1,8 +1,8 @@
 %tr.new-comment-row
-  %td
-  %td
-  %td
-  %td
+  %td.add_comment
+  %td.line-number-after.line-number
+  %td.line-number-before.line-number
+  %td.line
     .commit-comment
       = form_for @comment do |f|
         = f.hidden_field :start_line

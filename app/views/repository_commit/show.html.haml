@@ -31,7 +31,7 @@
           - else
             = diff.a_path
 
-      %fieldset.line-diff{:data => {:file => diff.b_path}}
+      .container.line-diff{:data => {:file => diff.b_path}}
         - # only need to check the original
         - original = diff.a_blob.nil? ? nil : diff.a_blob.data
 

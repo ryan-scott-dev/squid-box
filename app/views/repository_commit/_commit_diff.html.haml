@@ -1,4 +1,4 @@
-.diff.container
+.diff.well
   %table
     - before_count = 1
     - after_count = 1
@@ -8,13 +8,13 @@
 
       - line_comments = comments.find_all{|comment| line_count == comment.start_line}
 
-      %tr{:data => {:line => line_count}}
+      %tr.code{:data => {:line => line_count}}
         - line_count += 1
         %td.add_comment
           = link_to "+", "#"
-        %td.line-number-after
+        %td.line-number-after.line-number
           #{after_count}
-        %td.line-number-before
+        %td.line-number-before.line-number
           #{before_count}
 
         - case line
