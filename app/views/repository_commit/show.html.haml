@@ -1,17 +1,21 @@
 
 %h2
-  #{@commit.id_abbrev}
+  #{@commit.message}
 
-#{I18n.l @commit.date, :format => :short}
+.author
+  #{@commit.author}
 
-#{@commit.author}
+.date
+  #{I18n.l @commit.date, :format => :short}
 
-#{@commit.short_message}
+.commit-id
+  Commit #{@commit.id}
 
-.added
-  + #{@commit.stats.additions}
-.deleted
-  = "- #{@commit.stats.deletions}"
+.change-stats
+  .added
+    + #{@commit.stats.additions}
+  .deleted
+    = "- #{@commit.stats.deletions}"
 
 .diffs{:data => {:repository => @repository.id, :commit => @commit.id}}
   - @commit.diffs.each do |diff|
