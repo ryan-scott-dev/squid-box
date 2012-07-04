@@ -81,7 +81,11 @@
   text-decoration: none;
 }
 
-.diff .controls .hide {
+.diff .controls .action {
+  float: left;
+}
+
+.diff .controls .close-comment {
   float: right;
 }
 
@@ -128,8 +132,8 @@
   height: 100px;
 }
 
-.commit-comment .controls div{
-  display: inline;
+.commit-comment .controls{
+  display: block;
 }
 
 .diff td.line{
@@ -137,7 +141,7 @@
   min-width: 700px;
 }
 
-.diff tr.show-comment-row{
+.diff tr.show-comment-row, .diff tr.new-comment-row{
   border-top: 1px solid #DDD;
   border-bottom: 1px solid #DDD;
 }
@@ -154,4 +158,9 @@
 
   vertical-align: top;
   width: 40px;
+}
+
+.diff td.line .well{
+  padding: 4px;
+  margin-bottom: 10px;
 }

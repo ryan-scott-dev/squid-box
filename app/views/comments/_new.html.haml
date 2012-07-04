@@ -16,10 +16,14 @@
           = f.text_area :content
 
         .controls
-          = link_to "#", :id => "save_new_comment" do
-            .btn.btn-primary
-              Create
+          .action
+            = link_to "#", :id => "save_new_comment" do
+              .btn.btn-primary
+                Create
 
-          = link_to "#", :id => "close_new_comment" do
-            .hide.btn.btn-danger
-              Cancel
+          .close-comment
+            = link_to "#", :id => "close_new_comment" do
+              .btn.btn-danger
+                Cancel
+
+  %td.comments

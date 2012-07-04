@@ -8,13 +8,18 @@
         = comment.content
 
       .controls
-        .btn.btn-warning
-          Edit
+        .action
+          .btn.btn-warning
+            Edit
 
-        = link_to comment, :method => :delete, :remote => true, :id => "delete_commit_comment" do
-          .btn.btn-danger
-            Delete
+        .action
+          = link_to comment, :method => :delete, :remote => true, :id => "delete_commit_comment" do
+            .btn.btn-danger
+              Delete
 
-        = link_to "#", :remote => true, :id => "close_commit_comment" do
-          .hide.btn.btn-info
-            Close
+        .close-comment
+          = link_to "#", :remote => true, :id => "close_commit_comment" do
+            .btn.btn-info
+              Close
+
+  %td.comments
