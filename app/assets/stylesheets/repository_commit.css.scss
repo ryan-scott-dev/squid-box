@@ -9,7 +9,6 @@
   margin: 0;
   padding: 0;
   display: table;
-  padding-left: 30px;
   border-spacing: 2px 0px;
   border: 1px solid #DDD;
 }
@@ -34,6 +33,7 @@
   width: 10px;
   margin-left: -10px;
   background-color: #ECECEC;
+  text-align: center;
 }
 
 .diff td.add_comment a {
@@ -134,6 +134,7 @@
 
 .diff td.line{
   border-right: 1px solid #DDD;
+  min-width: 700px;
 }
 
 .diff tr.show-comment-row{
@@ -152,5 +153,5 @@
   border-left: 1px solid #DDD;
 
   vertical-align: top;
-  width: 5px;
+  width: 40px;
 }

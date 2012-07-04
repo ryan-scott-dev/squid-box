@@ -51,6 +51,8 @@
             %pre.prettyprint
               #{line.chomp}
             .comment-line-background
+        - else
+          %td.line
 
         %td.comments
           - line_comments.each do |line_comment|
