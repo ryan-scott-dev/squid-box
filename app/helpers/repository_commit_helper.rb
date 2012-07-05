@@ -41,8 +41,9 @@ module RepositoryCommitHelper
   private
   def produce_diff(diff, options = {})
     original = diff.a_blob.nil? ? nil : diff.a_blob.data
+    changed = diff.b_blob.nil? ? nil : diff.b_blob.data
 
-    Diffy::Diff.new original, diff.b_blob.data, {:allow_empty_diff => true}.merge(options)
+    Diffy::Diff.new original, changed, {:allow_empty_diff => true}.merge(options)
   end
 
 end

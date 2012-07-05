@@ -6,7 +6,7 @@ class Repository < ActiveRecord::Base
   validates_presence_of :name, :path
 
   before_save :generate_ssh_keys
-  after_save :ensure_repository_exists
+  after_validation :ensure_repository_exists
 
   def is_path_uri?
     errors.add(:path, "not a valid url") unless Repository.uri?(self.path)

@@ -29,7 +29,7 @@
           - if diff.a_path != diff.b_path
             #{diff.a_path} ==> #{diff.b_path}
           - else
-            = diff.a_path
+            = diff.b_path
 
       .container.line-diff{:data => {:file => diff.b_path}}
         -#= render :partial => "unified_full_commit_diff", :locals => {:diff => produce_full_unified_diff(diff),
