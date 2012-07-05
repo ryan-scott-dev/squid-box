@@ -32,8 +32,4 @@
             = diff.a_path
 
       .container.line-diff{:data => {:file => diff.b_path}}
-        - # only need to check the original
-        - original = diff.a_blob.nil? ? nil : diff.a_blob.data
-
-        - diffy_diff = Diffy::Diff.new(original, diff.b_blob.data, {:allow_empty_diff => true})
-        = render :partial => "commit_diff", :locals => {:diff => diffy_diff, :comments => comments}
+        = render :partial => "commit_diff", :locals => {:diff => produce_full_diff(diff), :comments => comments}
