@@ -16,7 +16,7 @@
       - if [:added, :deleted, :unchanged].include? line_type
         - if [:added, :unchanged].include? line_type
           - after_count += 1
-        - if [:delete, :unchanged].include? line_type
+        - if [:deleted, :unchanged].include? line_type
           - before_count += 1
 
         - line_comments = comments.find_all{|comment| line_count == comment.start_line}
@@ -28,10 +28,16 @@
             = link_to "+", "#"
 
           %td.line-number-before.line-number
-            #{before_count}
+            - if line_type == :added
+              = "-"
+            - else
+              #{before_count}
 
           %td.line-number-after.line-number
-            #{after_count}
+            - if line_type == :deleted
+              = "-"
+            - else
+              #{after_count}
 
           - case line
           - when /^\+/
