@@ -1,0 +1,57 @@
+.diff.well
+  %table
+
+    - before_count = 0
+    - after_count = 0
+    - line_count = 1
+
+    - diff.each do |line|
+      - line_type = find_line_type line
+
+      - if [:block_info].include? line_type
+        - puts line
+        - before_count = before_start_line(line) - 1
+        - after_count = after_start_line(line) - 1
+
+      - if [:added, :deleted, :unchanged].include? line_type
+        - if [:added, :unchanged].include? line_type
+          - after_count += 1
+        - if [:delete, :unchanged].include? line_type
+          - before_count += 1
+
+        - line_comments = comments.find_all{|comment| line_count == comment.start_line}
+
+        %tr.code{:data => {:line => line_count}}
+          - line_count += 1
+
+          %td.add_comment
+            = link_to "+", "#"
+
+          %td.line-number-before.line-number
+            #{before_count}
+
+          %td.line-number-after.line-number
+            #{after_count}
+
+          - case line
+          - when /^\+/
+            %td.line.ins
+              %pre.prettyprint
+                #{clean_line line}
+              .comment-line-background
+          - when /^-/
+            %td.line.del
+              %pre.prettyprint
+                #{clean_line line}
+              .comment-line-background
+          - when /^ /
+            %td.line.unchanged
+              %pre.prettyprint
+                #{clean_line line}
+              .comment-line-background
+          - else
+            %td.line
+
+          %td.comments
+            - line_comments.each do |line_comment|
+              = render :partial => "comments/line", :locals => {:comment => line_comment}

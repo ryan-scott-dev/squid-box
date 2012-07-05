@@ -1,11 +1,12 @@
 .diff.well
   %table
+
     - before_count = 1
     - after_count = 1
     - line_count = 1
 
     - diff.each do |line|
-
+      - puts line
       - line_comments = comments.find_all{|comment| line_count == comment.start_line}
 
       %tr.code{:data => {:line => line_count}}

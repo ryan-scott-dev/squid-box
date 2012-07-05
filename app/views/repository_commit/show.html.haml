@@ -32,4 +32,7 @@
             = diff.a_path
 
       .container.line-diff{:data => {:file => diff.b_path}}
-        = render :partial => "commit_diff", :locals => {:diff => produce_full_diff(diff), :comments => comments}
+        -#= render :partial => "unified_full_commit_diff", :locals => {:diff => produce_full_unified_diff(diff),
+        -#                                                             :comments => comments}
+        = render :partial => "unified_context_diff", :locals => {:diff => produce_context_unified_diff(diff),
+                                                                 :comments => comments}
